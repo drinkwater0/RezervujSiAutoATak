@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -206,7 +206,7 @@ namespace VozovyPark
             {
                 if(rezervaceData[i].Id.ToString() == odpoved && username == rezervaceData[i].Uzivatel)
                 {
-                    rezervaceData.RemoveAt(i);
+                    rezervaceData[i].Aktivni = false;
                     Console.WriteLine("Rezervace číslo " + odpoved + " byla úspěšně smazána.");
                     Console.ReadKey();
                     necoOdstraneno = true;
@@ -228,7 +228,7 @@ namespace VozovyPark
             if (odpoved.Length > 0)
             {
                 if (currentUser.Username == username)
-                    currentUser.Username = odpoved;
+                    currentUser.HesloHash = Enkryptor(odpoved);
                 else
                     for (int i = 0; i < usersData.Count; i++)
                     {
@@ -524,7 +524,7 @@ namespace VozovyPark
             return;
         }
 
-        public void PridatVyzadaniZmeny()
+        public static void PridatVyzadaniZmeny()
         {
             string odpoved = "";
             Console.WriteLine("Napište username uživatele kterýmu chcete přidat vyžádání změny hesla: ");
@@ -546,6 +546,142 @@ namespace VozovyPark
             else
                 Console.WriteLine("Uživatel neexistuje");
 
+        }
+
+        public static void ZobrazNeaktivniRezervace()
+        {
+            bool maRezervaci = false;
+            int sirka = 40;
+
+            foreach (Rezervace rezervace in rezervaceData)
+            {
+                if (!rezervace.Aktivni)
+                {
+                    if (!maRezervaci)
+                        Console.WriteLine(CenterText("Id", sirka) + CenterText("IdAuta", sirka) + CenterText("Od", sirka) + CenterText("Do", sirka));
+
+                    Console.WriteLine(CenterText(rezervace.Id.ToString(), sirka) + CenterText(rezervace.IdAuta.ToString(), sirka) +
+                        CenterText(rezervace.Od.ToString(), sirka) + CenterText(rezervace.Do.ToString(), sirka));
+                    maRezervaci = true;
+                }
+            }
+            if (!maRezervaci)
+                Console.WriteLine("Nemáme k dispozici žádné záznamy neaktivních rezervací.");
+
+            Console.ReadKey();
+        }
+
+        public static void PridatServis()
+        {
+            ServisAuto servis = new ServisAuto();
+            VypisDostupnaAuta(autaData);
+            Console.WriteLine();
+            Console.WriteLine("Servisní úkon přidávejte opatrně, v budoucnu nepůjde smazat.");
+            bool existuje = false;
+
+            do
+            {
+                servis.Id = RandomInt(4);
+                foreach (ServisAuto serviss in servisData)
+                {
+                    if (serviss.Id == servis.Id)
+                        existuje = true;
+                }
+                if (!existuje)
+                    break;
+            } while (true);
+
+            Console.WriteLine("Napište id auta ke kterému chcete zapsat servisní úkon:");
+            string odpoved = Console.ReadLine();
+            existuje = false;
+            foreach(Auto auto in autaData)
+            {
+                if (auto.Id.ToString() == odpoved)
+                {
+                    servis.IdAuto = int.Parse(odpoved);
+                    existuje = true;
+                }
+            }
+            if(!existuje)
+            {
+                Console.WriteLine("Špatně zadané id auta.");
+                Console.ReadKey();
+                return;
+            }
+
+            Console.WriteLine("Napište kdy byl proveden servisní úkon: (např. 12.04.2021)");
+            odpoved = Console.ReadLine();
+            if (DateTime.TryParse(odpoved, out DateTime kdy))
+                servis.Kdy = kdy;
+            else
+            {
+                Console.WriteLine("Špatně zadané datum.");
+                Console.ReadKey();
+                return;
+            }
+
+            Console.WriteLine("Napište popis servisniho ukonu: ");
+            odpoved = Console.ReadLine();
+            servis.UkonPopis = odpoved;
+
+            Console.WriteLine("Napište cenu servisniho ukonu v korunach: (napr. 250,90)");
+            odpoved = Console.ReadLine();
+            if (decimal.TryParse(odpoved, out decimal cena))
+                servis.CenaUkonu = cena;
+            else
+            {
+                Console.WriteLine("Špatně zadaná cena.");
+                Console.ReadKey();
+                return;
+            }
+
+            Console.WriteLine("Napište cislo faktury: ");
+            odpoved = Console.ReadLine();
+            if (int.TryParse(odpoved, out int faktura))
+                servis.Faktura = faktura;
+            else
+            {
+                Console.WriteLine("Špatně zadané číslo faktury.");
+                Console.ReadKey();
+                return;
+            }
+
+            servisData.Add(servis);
+            Console.WriteLine("Servisní úkon byl úspěšně zapsán.");
+            Console.ReadKey();
+        }
+
+        public static void VypsatServisAuta()
+        {
+            VypisDostupnaAuta(autaData);
+            Console.WriteLine();
+            Console.WriteLine("Napište id auta jehož servisní knížku byste chtěli vidět: ");
+            string odpoved = Console.ReadLine();
+            int sirka = 40;
+
+            bool existuje = false;
+            foreach(Auto auto in autaData)
+            {
+                if(odpoved == auto.Id.ToString())
+                {
+                    foreach(ServisAuto servis in servisData)
+                    {
+                        if (existuje == false)
+                        {
+                            Console.WriteLine("  Faktura" + CenterText("Cena", sirka) + "    Popis");
+                            Console.WriteLine("  "+servis.Faktura.ToString() + CenterText(servis.CenaUkonu.ToString(), sirka) + CenterText(servis.UkonPopis, sirka));
+                        } 
+                        else
+                            Console.WriteLine(CenterText(servis.Faktura.ToString(), sirka) + CenterText(servis.CenaUkonu.ToString(), sirka) + "   " + servis.UkonPopis);
+                        existuje = true;
+                    }
+                }
+            }
+            if(!existuje)
+            {
+                Console.WriteLine("Servisní knížka tohoto auta neexistuje.");
+            }
+            Console.ReadKey();
         }
     }
 }
