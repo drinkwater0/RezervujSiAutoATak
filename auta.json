@@ -1,0 +1,16 @@
+[
+  {
+    "Id": 1675,
+    "Znacka": "Skoda",
+    "Model": "Octavie",
+    "JeOsobni": true,
+    "Spotreba": 4.5
+  },
+  {
+    "Id": 3312,
+    "Znacka": "Jaguar",
+    "Model": "XJ-S",
+    "JeOsobni": true,
+    "Spotreba": 0
+  }
+]

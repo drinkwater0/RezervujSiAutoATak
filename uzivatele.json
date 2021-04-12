@@ -1,0 +1,42 @@
+[
+  {
+    "JeAdmin": true,
+    "Username": "drinkwater",
+    "HesloHash": "671f5cfad9b9afd5b43c93b6d527cafcfc135f5990ac11d7e628f2fff91b380b",
+    "Jmeno": "Drink",
+    "Prijmeni": "Water",
+    "LastLogin": "2021-04-12T15:33:32.2069219+02:00",
+    "ChciNoveHeslo": false,
+    "Smazan": false
+  },
+  {
+    "JeAdmin": true,
+    "Username": "pepe",
+    "HesloHash": "671f5cfad9b9afd5b43c93b6d527cafcfc135f5990ac11d7e628f2fff91b380b",
+    "Jmeno": "Rich",
+    "Prijmeni": "Monkey",
+    "LastLogin": "2021-04-12T13:35:00.2931546+02:00",
+    "ChciNoveHeslo": false,
+    "Smazan": false
+  },
+  {
+    "JeAdmin": false,
+    "Username": "96lgysk7",
+    "HesloHash": "a7048b70faf009529f314c52353c04d34f9fc9e607128efab7163d865a624dcc",
+    "Jmeno": "SMAZANO",
+    "Prijmeni": "SMAZANO",
+    "LastLogin": "2021-04-12T12:04:55.0663243+02:00",
+    "ChciNoveHeslo": false,
+    "Smazan": true
+  },
+  {
+    "JeAdmin": false,
+    "Username": "gon",
+    "HesloHash": "671f5cfad9b9afd5b43c93b6d527cafcfc135f5990ac11d7e628f2fff91b380b",
+    "Jmeno": "dkek",
+    "Prijmeni": "ddd",
+    "LastLogin": "2021-04-12T14:59:12.5754006+02:00",
+    "ChciNoveHeslo": false,
+    "Smazan": false
+  }
+]
