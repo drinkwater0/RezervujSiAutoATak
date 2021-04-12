@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Text;
 using System.Security.Cryptography;
 using System.Collections.Generic;
@@ -349,32 +349,38 @@ namespace VozovyPark
                 VypisCenterText("------------------------------------------------------------------------------------------------------------------------------------------------", s);
                 VypisCenterText("RezervujSiAutoATak    DrinkWater Inc.", s);
                 VypisCenterText("------------------------------------------------------------------------------------------------------------------------------------------------", s);
-                Console.WriteLine("\n\n");
+                Console.WriteLine("");
                 Console.ForegroundColor = ConsoleColor.DarkGreen;
 
-                Console.WriteLine("Uživatel:            " + currentUser.Username);
-                Console.WriteLine("Jméno a příjmení:    " + currentUser.Jmeno + " " + currentUser.Prijmeni);
-                Console.WriteLine("Uživatel:            " + currentUser.Username);
-                Console.WriteLine();
+                VypisCenterText("- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -", s);
+                Console.WriteLine("Uživatel:             " + currentUser.Username);
+                Console.WriteLine("Jméno a příjmení:     " + currentUser.Jmeno + " " + currentUser.Prijmeni);
+                Console.WriteLine("Poslední přihlášení:  " + currentUser.LastLogin);
+                VypisCenterText("- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -", s);
+                
 
-
-                Console.WriteLine("[1] --- Zobrazit rezervace");
-                Console.WriteLine("[2] --- Vložit novou rezervaci");
-                Console.WriteLine("[3] --- Zrušit rezervaci");
-                Console.WriteLine("[4] --- Změnit heslo");
-                Console.WriteLine("[5] --- Odhlásit se");
+                Console.WriteLine("________________________________________");
+                Console.WriteLine("[1] --- Zobrazit rezervace             |");
+                Console.WriteLine("[2] --- Vložit novou rezervaci         |");
+                Console.WriteLine("[3] --- Zrušit rezervaci               |");
+                Console.WriteLine("[4] --- Změnit heslo                   |");
+                Console.WriteLine("[5] --- Odhlásit se                    |");
                 if(currentUser.JeAdmin)
                 {
-                    Console.WriteLine("[6] --- Přidat nového uživatele");
-                    Console.WriteLine("[7] --- Smazat uživatele");
-                    Console.WriteLine("[8] --- Přidat nové auto");
-                    Console.WriteLine("[9] --- Smazat auto");
-                    Console.WriteLine("[10] -- Zobrazit uživatele");
-                    Console.WriteLine("[11] -- Zobrazit smazané uživatele");
+                    Console.WriteLine("[6] --- Přidat nového uživatele        |");
+                    Console.WriteLine("[7] --- Smazat uživatele               |");
+                    Console.WriteLine("[8] --- Přidat nové auto               |");
+                    Console.WriteLine("[9] --- Smazat auto                    |");
+                    Console.WriteLine("[10] -- Zobrazit uživatele             |");
+                    Console.WriteLine("[11] -- Zobrazit smazané uživatele     |");
+                    Console.WriteLine("[12] -- Zobrazit rezervace auta        |");
+                    Console.WriteLine("[13] -- Zobrazit neplatné rezervace    |");
+                    Console.WriteLine("[14] -- Přidat vyžádání změny hesla    |");
+                    Console.WriteLine("[15] -- Přidat servisní úkon auta      |");
+                    Console.WriteLine("[16] -- Ukázat servisní knížku auta    |");
                 }
-                Console.WriteLine("[12] - Zobrazit rezervace auta");
-                Console.WriteLine("[99] -- Ukončit program");
-                Console.WriteLine();
+                Console.WriteLine("[99] -- Ukončit program                |");
+                Console.WriteLine("¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯");
 
 
                 string username = "";
@@ -544,6 +550,22 @@ namespace VozovyPark
                             break;
                         case 12:
                             UzivatelPrikazy.ZobrazRezervaceAuta();
+                            break;
+                        case 13:
+                            if (currentUser.JeAdmin == true)
+                                AdminPrikazy.ZobrazNeaktivniRezervace();
+                            break;
+                        case 14:
+                            if (currentUser.JeAdmin == true)
+                                AdminPrikazy.PridatVyzadaniZmeny();
+                            break;
+                        case 15:
+                            if (currentUser.JeAdmin == true)
+                                AdminPrikazy.PridatServis();
+                            break;
+                        case 16:
+                            if (currentUser.JeAdmin == true)
+                                AdminPrikazy.VypsatServisAuta();
                             break;
                         case 99:
                             odhlasitVypnout = 2;
